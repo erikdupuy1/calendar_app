@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar App Features</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #005b96;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #005b96;
+            font-size: 1.75em;
+            margin-bottom: 10px;
+        }
+        .feature {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-group button {
+            padding: 10px 20px;
+            background-color: #005b96;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .form-group button:hover {
+            background-color: #003f6d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calendar App Features</h1>
+
+        <!-- Authentication -->
+        <div class="feature" id="authentication">
+            <h2>1. Authentication</h2>
+            <p>Authenticate with Google Calendar API.</p>
+            <div class="form-group">
+                <button onclick="authenticate()">Authenticate</button>
+            </div>
+        </div>
+
+        <!-- Habits -->
+        <div class="feature" id="habits">
+            <h2>2. Habits</h2>
+            <form id="habits-form">
+                <div class="form-group">
+                    <label for="habit-summary">Summary</label>
+                    <input type="text" id="habit-summary" name="habit-summary">
+                </div>
+                <div class="form-group">
+                    <label for="habit-description">Description</label>
+                    <textarea id="habit-description" name="habit-description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="habit-start-time">Start Time</label>
+                    <input type="datetime-local" id="habit-start-time" name="habit-start-time">
+                </div>
+                <div class="form-group">
+                    <label for="habit-end-time">End Time</label>
+                    <input type="datetime-local" id="habit-end-time" name="habit-end-time">
+                </div>
+                <div class="form-group">
+                    <label for="habit-frequency">Frequency</label>
+                    <select id="habit-frequency" name="habit-frequency">
+                        <option value="DAILY">Daily</option>
+                        <option value="WEEKLY">Weekly</option>
+                        <option value="MONTHLY">Monthly</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="button" onclick="createHabit()">Create Habit</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Calendar Sync -->
+        <div class="feature" id="calendar-sync">
+            <h2>3. Calendar Sync</h2>
+            <form id="sync-form">
+                <div class="form-group">
+                    <label for="source-calendar">Source Calendar ID</label>
+                    <input type="text" id="source-calendar" name="source-calendar">
+                </div>
+                <div class="form-group">
+                    <label for="target-calendar">Target Calendar ID</label>
+                    <input type="text" id="target-calendar" name="target-calendar">
+                </div>
+                <div class="form-group">
+                    <button type="button" onclick="syncCalendars()">Sync Calendars</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Scheduling Links -->
+        <div class="feature" id="scheduling-links">
+            <h2>4. Scheduling Links</h2>
+            <form id="scheduling-form">
+                <div class="form-group">
+                    <label for="meeting-summary">Meeting Summary</label>
+                    <input type="text" id="meeting-summary" name="meeting-summary">
+                </div>
+                <div class="form-group">
+                    <label for="meeting-description">Meeting Description</label>
+                    <textarea id="meeting-description" name="meeting-description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="meeting-start-time">Start Time</label>
+                    <input type="datetime-local" id="meeting-start-time" name="meeting-start-time">
+                </div>
+                <div class="form-group">
+                    <label for="meeting-end-time">End Time</label>
+                    <input type="datetime-local" id="meeting-end-time" name="meeting-end-time">
+                </div>
+                <div class="form-group">
+                    <label for="meeting-attendees">Attendees (comma-separated emails)</label>
+                    <input type="text" id="meeting-attendees" name="meeting-attendees">
+                </div>
+                <div class="form-group">
+                    <button type="button" onclick="scheduleMeeting()">Schedule Meeting</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Smart Meetings -->
+        <div class="feature" id="smart-meetings">
+            <h2>5. Smart Meetings</h2>
+            <form id="smart-meeting-form">
+                <div class="form-group">
+                    <label for="smart-summary">Summary</label>
+                    <input type="text" id="smart-summary" name="smart-summary">
+                </div>
+                <div class="form-group">
+                    <label for="smart-description">Description</label>
+                    <textarea id="smart-description" name="smart-description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="smart-attendees">Attendees (comma-separated emails)</label>
+                    <input type="text" id="smart-attendees" name="smart-attendees">
+                </div>
+                <div class="form-group">
+                    <label for="smart-duration">Duration (minutes)</label>
+                    <input type="number" id="smart-duration" name="smart-duration">
+                </div>
+                <div class="form-group">
+                    <button type="button" onclick="scheduleSmartMeeting()">Schedule Smart Meeting</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Buffer Time -->
+        <div class="feature" id="buffer-time">
+            <h2>6. Buffer Time</h2>
+            <form id="buffer-form">
+                <div class="form-group">
+                    <label for="buffer-event-id">Event ID</label>
+                    <input type="text" id="buffer-event-id" name="buffer-event-id">
+                </div>
+                <div class="form-group">
+                    <label for="buffer-minutes">Buffer Minutes</label>
+                    <input type="number" id="buffer-minutes" name="buffer-minutes">
+                </div>
+                <div class="form-group">
+                    <button type="button" onclick="addBufferTime()">Add Buffer Time</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Time Tracking -->
+        <div class="feature" id="time-tracking">
+            <h2>7. Time Tracking</h2>
+            <div class="form-group">
+                <button type="button" onclick="getTimeTrackingData()">Get Time Tracking Data</button>
+            </div>
+            <div id="time-tracking-results"></div>
+        </div>
+
+        <!-- People Analytics -->
+        <div class="feature" id="people-analytics">
+            <h2>8. People Analytics</h2>
+            <form id="analytics-form">
+                <div class="form-group">
+                    <label for="team-emails">Team Emails (comma-separated)</label>
+                    <input type="text" id="team-emails" name="team-emails">
+                </div>
+                <div class="form-group">
+                    <button type="button" onclick="getPeopleAnalytics()">Get People Analytics</button>
+                </div>
+            </form>
+            <div id="analytics-results"></div>
+        </div>
+
+        <!-- Planner -->
+        <div class="feature" id="planner">
+            <h2>9. Planner</h2>
+            <form id="planner-form">
+                <div
+                <div class="form-group">
+                    <label for="tasks">Tasks (JSON format)</label>
+                    <textarea id="tasks" name="tasks"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="fixed-events">Fixed Events (JSON format)</label>
+                    <textarea id="fixed-events" name="fixed-events"></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="button" onclick="createDailyPlan()">Create Daily Plan</button>
+                </div>
+            </form>
+            <div id="planner-results"></div>
+        </div>
+    </div>
+
+    <script>
+        // Authentication
+        function authenticate() {
+            alert('Authentication logic goes here.');
+        }
+
+        // Habits
+        function createHabit() {
+            const summary = document.getElementById('habit-summary').value;
+            const description = document.getElementById('habit-description').value;
+            const startTime = document.getElementById('habit-start-time').value;
+            const endTime = document.getElementById('habit-end-time').value;
+            const frequency = document.getElementById('habit-frequency').value;
+            alert(`Habit Created:\nSummary: ${summary}\nDescription: ${description}\nStart Time: ${startTime}\nEnd Time: ${endTime}\nFrequency: ${frequency}`);
+        }
+
+        // Calendar Sync
+        function syncCalendars() {
+            const sourceCalendar = document.getElementById('source-calendar').value;
+            const targetCalendar = document.getElementById('target-calendar').value;
+            alert(`Syncing Calendars:\nSource: ${sourceCalendar}\nTarget: ${targetCalendar}`);
+        }
+
+        // Scheduling Links
+        function scheduleMeeting() {
+            const summary = document.getElementById('meeting-summary').value;
+            const description = document.getElementById('meeting-description').value;
+            const startTime = document.getElementById('meeting-start-time').value;
+            const endTime = document.getElementById('meeting-end-time').value;
+            const attendees = document.getElementById('meeting-attendees').value;
+            alert(`Meeting Scheduled:\nSummary: ${summary}\nDescription: ${description}\nStart Time: ${startTime}\nEnd Time: ${endTime}\nAttendees: ${attendees}`);
+        }
+
+        // Smart Meetings
+        function scheduleSmartMeeting() {
+            const summary = document.getElementById('smart-summary').value;
+            const description = document.getElementById('smart-description').value;
+            const attendees = document.getElementById('smart-attendees').value;
+            const duration = document.getElementById('smart-duration').value;
+            alert(`Smart Meeting Scheduled:\nSummary: ${summary}\nDescription: ${description}\nAttendees: ${attendees}\nDuration: ${duration} minutes`);
+        }
+
+        // Buffer Time
+        function addBufferTime() {
+            const eventId = document.getElementById('buffer-event-id').value;
+            const bufferMinutes = document.getElementById('buffer-minutes').value;
+            alert(`Buffer Time Added:\nEvent ID: ${eventId}\nBuffer Minutes: ${bufferMinutes}`);
+        }
+
+        // Time Tracking
+        function getTimeTrackingData() {
+            alert('Fetching Time Tracking Data...');
+        }
+
+        // People Analytics
+        function getPeopleAnalytics() {
+            const teamEmails = document.getElementById('team-emails').value;
+            alert(`Fetching People Analytics for:\nTeam Emails: ${teamEmails}`);
+        }
+
+        // Planner
+        function createDailyPlan() {
+            const tasks = document.getElementById('tasks').value;
+            const fixedEvents = document.getElementById('fixed-events').value;
+            alert(`Daily Plan Created:\nTasks: ${tasks}\nFixed Events: ${fixedEvents}`);
+        }
+    </script>
+</body>
+</html>
